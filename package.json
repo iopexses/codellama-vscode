@@ -1,5 +1,5 @@
 {
-  "name": "cisco-llama",
+  "name": "cisco",
   "displayName": "ChatGPT: write and improve code using AI",
   "description": "Use ChatGPT and GPT4 right inside the IDE to enhance and automate your coding with AI-powered assistance (unofficial)",
   "version": "1.1.2",
@@ -32,134 +32,134 @@
   "contributes": {
     "commands": [
       {
-        "command": "cisco-llama.ask",
-        "title": "Ask cisco-llama"
+        "command": "cisco.ask",
+        "title": "Ask Cisco"
       },
       {
-        "command": "cisco-llama.explain",
-        "title": "ChatGPT: Explain selection"
+        "command": "cisco.explain",
+        "title": "Cisco: Explain selection"
       },
       {
-        "command": "cisco-llama.refactor",
-        "title": "cisco-llama: Refactor selection"
+        "command": "cisco.refactor",
+        "title": "Cisco: Refactor selection"
       },
       {
-        "command": "cisco-llama.findProblems",
-        "title": "ChatGPT: Find problems"
+        "command": "cisco.findProblems",
+        "title": "Cisco: Find problems"
       },
       {
-        "command": "cisco-llama.optimize",
-        "title": "ChatGPT: Optimize selection"
+        "command": "cisco.unitTest",
+        "title": "Cisco: Generate unit tests"
       },
       {
-        "command": "cisco-llama.documentation",
-        "title": "ChatGPT: Write documentation"
+        "command": "cisco.documentation",
+        "title": "Cisco: Write documentation"
       },
       {
-        "command": "cisco-llama.resetConversation",
-        "title": "Reset ChatGPT conversation"
+        "command": "cisco.resetConversation",
+        "title": "Reset Cisco conversation"
       },
       {
-        "command": "cisco-llama.tryAgain",
-        "title": "Retry ChatGPT request"
+        "command": "cisco.tryAgain",
+        "title": "Retry Cisco request"
       }
     ],
     "menus": {
       "editor/context": [
         {
-          "command": "cisco-llama.ask",
+          "command": "cisco.ask",
           "when": "editorTextFocus",
           "group": "chatgpt-menu-group@1"
         },
         {
-          "command": "chatgpt.explain",
+          "command": "cisco.explain",
           "when": "editorHasSelection",
           "group": "chatgpt-menu-group@2"
         },
         {
-          "command": "cisco-llama.refactor",
+          "command": "cisco.refactor",
           "when": "editorHasSelection",
           "group": "chatgpt-menu-group@3"
         },
         {
-          "command": "chatgpt.findProblems",
+          "command": "cisco.findProblems",
           "when": "editorHasSelection",
           "group": "chatgpt-menu-group@4"
         },
         {
-          "command": "chatgpt.optimize",
+          "command": "cisco.unitTest",
           "when": "editorHasSelection",
           "group": "chatgpt-menu-group@5"
         },
         {
-          "command": "chatgpt.documentation",
+          "command": "cisco.documentation",
           "when": "editorHasSelection",
           "group": "chatgpt-menu-group@6"
         }
       ],
       "commandPalette": [
         {
-          "command": "cisco-llama.ask"
+          "command": "cisco.ask"
         },
         {
-          "command": "chatgpt.explain",
+          "command": "cisco.explain",
           "when": "editorHasSelection"
         },
         {
-          "command": "cisco-llama.refactor",
+          "command": "cisco.refactor",
           "when": "editorHasSelection"
         },
         {
-          "command": "chatgpt.findProblems",
+          "command": "cisco.findProblems",
           "when": "editorHasSelection"
         },
         {
-          "command": "chatgpt.optimize",
+          "command": "cisco.unitTest",
           "when": "editorHasSelection"
         },
         {
-          "command": "chatgpt.documentation",
+          "command": "cisco.documentation",
           "when": "editorHasSelection"
         },
         {
-          "command": "chatgpt.resetConversation"
+          "command": "cisco.resetConversation"
         }
       ]
     },
     "viewsContainers": {
       "activitybar": [
         {
-          "id": "chatgpt",
-          "title": "cisco-llama container title",
+          "id": "cisco",
+          "title": "Cisco Copilot",
           "icon": "resources/icon.png"
         }
       ]
     },
     "views": {
-      "chatgpt": [
+      "cisco": [
         {
           "type": "webview",
-          "id": "chatgpt.chatView",
-          "name": "cisco-llama webview title"
+          "id": "cisco.chatView",
+          "name": "Chat"
         }
       ]
     },
     "configuration": {
-      "title": "cisco-llama",
+      "title": "Cisco Copilot",
       "type": "object",
       "properties": {
-        "chatgpt.apiKey": {
+        "cisco.apiKey": {
           "markdownDescription": "OpenAI API key from [https://platform.openai.com/account/api-keys](https://platform.openai.com/account/api-keys)",
           "type": "string",
           "order": 0
         },
-        "chatgpt.apiUrl": {
+        "cisco.apiUrl": {
           "markdownDescription": "OpenAI API URL or other custom API URL. Defaults to [https://api.openai.com/v1](https://api.openai.com/v1)",
           "type": "string",
           "default": "https://api.openai.com/v1",
           "order": 1
         },
-        "chatgpt.model": {
+        "cisco.model": {
           "type": "string",
           "enum": [
             "gpt-3.5-turbo",
@@ -169,61 +169,61 @@
           "description": "Which GPT model to use",
           "order": 1
         },
-        "chatgpt.pasteOnClick": {
+        "cisco.pasteOnClick": {
           "type": "boolean",
           "default": true,
           "description": "Paste the code from a codeblock inside the response into the editor when you click on it",
           "order": 2
         },
-        "chatgpt.promptPrefix.explain": {
+        "cisco.promptPrefix.explain": {
           "type": "string",
           "default": "Explain what this code does: ",
           "description": "The prompt prefix used for explaining the selected code",
           "order": 3
         },
-        "chatgpt.promptPrefix.refactor": {
+        "cisco.promptPrefix.refactor": {
           "type": "string",
           "default": "Refactor this code and explain what's changed: ",
           "description": "The prompt prefix used for refactoring the selected code",
           "order": 4
         },
-        "chatgpt.promptPrefix.findProblems": {
+        "cisco.promptPrefix.findProblems": {
           "type": "string",
           "default": "Find problems with the following code, fix them and explain what was wrong (Do not change anything else, if there are no problems say so): ",
           "description": "The prompt prefix used for finding problems in the selected code",
           "order": 5
         },
-        "chatgpt.promptPrefix.documentation": {
+        "cisco.promptPrefix.documentation": {
           "type": "string",
           "default": "Write documentation for the following code: ",
           "description": "The prompt prefix used for writing documentation for the selected code",
           "order": 7
         },
-        "chatgpt.promptPrefix.optimize": {
+        "cisco.promptPrefix.unitTest": {
           "type": "string",
-          "default": "Optimize the following code if there is anything to improve, if not say so: ",
-          "description": "The prompt prefix used for optimizing the selected code",
+          "default": "Generate two unit tests for the following code: ",
+          "description": "The prompt prefix used for unit testing the selected code",
           "order": 6
         },
-        "chatgpt.keepConversation": {
+        "cisco.keepConversation": {
           "type": "boolean",
           "default": true,
           "description": "Keep the conversation going by using the same conversation ID for all requests (allows follow-up questions)",
           "order": 8
         },
-        "chatgpt.timeoutLength": {
+        "cisco.timeoutLength": {
           "type": "number",
           "default": "120",
           "description": "How long should the request wait for a response before timing out (in seconds)",
           "order": 9
         },
-        "chatgpt.selectedInsideCodeblock": {
+        "cisco.selectedInsideCodeblock": {
           "type": "boolean",
           "default": true,
           "description": "Append selected code as a codeblock (```...code...```) instead of plain text",
           "order": 10
         },
-        "chatgpt.codeblockWithLanguageId": {
+        "cisco.codeblockWithLanguageId": {
           "type": "boolean",
           "default": true,
           "description": "Append language id of the selected code to the codeblock (```language...code...```)",
