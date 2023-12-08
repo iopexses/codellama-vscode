@@ -275,15 +275,32 @@ class ChatGPTViewProvider implements vscode.WebviewViewProvider {
 			const agent = this._chatGPTAPI;
 			
 			try {
-				let res: any = '';
+				let res: ChatMessage;
 				console.log(this._prompt?.slice(0, 6));
 				if (this._prompt?.slice(0, 6) === "/cisco") {
 					console.log("cisco command");
 					this._prompt = this._prompt.slice(7);
 
+					const customEndpoint = 'https://bkitano--cisco-llama-chat.modal.run'
+					const body = {
+						messages: [
+							{
+								id: "asdf",
+								content: this._prompt,
+								role: "user",
+							}
+						]
+					}
+
+					const response = await fetch(customEndpoint, {
+						method: 'POST',
+						body: JSON.stringify(body),
+						headers: { 'Content-Type': 'application/json' },
+					});
+
 					res = {
 						id: 'asdf',
-						text: 'you called a cisco command',
+						text: JSON.parse(await response.text()).message,
 						role: 'assistant',
 					}
 				} else {
