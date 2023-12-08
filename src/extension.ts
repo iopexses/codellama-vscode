@@ -1,6 +1,6 @@
 import * as vscode from 'vscode';
-import { ChatGPTAPI } from 'chatgpt';
-
+import { ChatGPTAPI, ChatMessage } from 'chatgpt';
+import fetch from 'node-fetch';
 
 type AuthInfo = {apiKey?: string};
 type Settings = {selectedInsideCodeblock?: boolean, codeblockWithLanguageId?: false, pasteOnClick?: boolean, keepConversation?: boolean, timeoutLength?: number, model?: string, apiUrl?: string};
@@ -33,26 +33,26 @@ export function activate(context: vscode.ExtensionContext) {
 
 	// Register the provider with the extension's context
 	context.subscriptions.push(
-		vscode.window.registerWebviewViewProvider(ChatGPTViewProvider.viewType, provider,  {
+		vscode.window.registerWebviewViewProvider(ChatGPTViewProvider.webviewId, provider,  {
 			webviewOptions: { retainContextWhenHidden: true }
 		})
 	);
 
 
 	const commandHandler = (command:string) => {
-		const config = vscode.workspace.getConfiguration('chatgpt');
+		const config = vscode.workspace.getConfiguration('cisco-llama');
 		const prompt = config.get(command) as string;
 		provider.search(prompt);
 	};
 
 	// Register the commands that can be called from the extension's package.json
 	context.subscriptions.push(
-		vscode.commands.registerCommand('chatgpt.ask', () => 
+		vscode.commands.registerCommand('cisco-llama.ask', () => 
 			vscode.window.showInputBox({ prompt: 'What do you want to do?' })
 			.then((value) => provider.search(value))
 		),
+		vscode.commands.registerCommand('cisco-llama.refactor', () => commandHandler('promptPrefix.refactor')),
 		vscode.commands.registerCommand('chatgpt.explain', () => commandHandler('promptPrefix.explain')),
-		vscode.commands.registerCommand('chatgpt.refactor', () => commandHandler('promptPrefix.refactor')),
 		vscode.commands.registerCommand('chatgpt.optimize', () => commandHandler('promptPrefix.optimize')),
 		vscode.commands.registerCommand('chatgpt.findProblems', () => commandHandler('promptPrefix.findProblems')),
 		vscode.commands.registerCommand('chatgpt.documentation', () => commandHandler('promptPrefix.documentation')),
@@ -96,7 +96,7 @@ export function activate(context: vscode.ExtensionContext) {
 
 
 class ChatGPTViewProvider implements vscode.WebviewViewProvider {
-	public static readonly viewType = 'chatgpt.chatView';
+	public static readonly webviewId = 'chatgpt.chatView'; // has to match the id in package.json/contributes/views/c
 	private _view?: vscode.WebviewView;
 
 	private _chatGPTAPI?: ChatGPTAPI;
@@ -270,27 +270,41 @@ class ChatGPTViewProvider implements vscode.WebviewViewProvider {
 			// Make sure the prompt is shown
 			this._view?.webview.postMessage({ type: 'setPrompt', value: this._prompt });
 			this._view?.webview.postMessage({ type: 'addResponse', value: '...' });
-
+			
+			
 			const agent = this._chatGPTAPI;
-
+			
 			try {
+				let res: any = '';
+				console.log(this._prompt?.slice(0, 6));
+				if (this._prompt?.slice(0, 6) === "/cisco") {
+					console.log("cisco command");
+					this._prompt = this._prompt.slice(7);
+
+					res = {
+						id: 'asdf',
+						text: 'you called a cisco command',
+						role: 'assistant',
+					}
+				} else {
 				// Send the search prompt to the ChatGPTAPI instance and store the response
-				const res = await agent.sendMessage(searchPrompt, {
-					onProgress: (partialResponse) => {
-						// If the message number has changed, don't show the partial response
-						if (this._currentMessageNumber !== currentMessageNumber) {
-							return;
-						}
-						console.log("onProgress");
-						if (this._view && this._view.visible) {
-							response = partialResponse.text;
-							this._response = response;
-							this._view.webview.postMessage({ type: 'addResponse', value: response });
-						}
-					},
-					timeoutMs: (this._settings.timeoutLength || 60) * 1000,
-					...this._conversation
-				});
+					res = await agent.sendMessage(searchPrompt, {
+						onProgress: (partialResponse) => {
+							// If the message number has changed, don't show the partial response
+							if (this._currentMessageNumber !== currentMessageNumber) {
+								return;
+							}
+							console.log("onProgress");
+							if (this._view && this._view.visible) {
+								response = partialResponse.text;
+								this._response = response;
+								this._view.webview.postMessage({ type: 'addResponse', value: response });
+							}
+						},
+						timeoutMs: (this._settings.timeoutLength || 60) * 1000,
+						...this._conversation
+					});
+				}
 
 				if (this._currentMessageNumber !== currentMessageNumber) {
 					return;
@@ -367,7 +381,7 @@ class ChatGPTViewProvider implements vscode.WebviewViewProvider {
 				</style>
 			</head>
 			<body>
-				<input class="h-10 w-full text-white bg-stone-700 p-4 text-sm" placeholder="Ask ChatGPT something" id="prompt-input" />
+				<input class="h-10 w-full text-white bg-stone-700 p-4 text-sm" placeholder="Ask cisco-llama" id="prompt-input" />
 				
 				<div id="response" class="pt-4 text-sm">
 				</div>

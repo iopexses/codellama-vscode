@@ -1,9 +1,9 @@
 {
-  "name": "chatgpt",
+  "name": "cisco-llama",
   "displayName": "ChatGPT: write and improve code using AI",
   "description": "Use ChatGPT and GPT4 right inside the IDE to enhance and automate your coding with AI-powered assistance (unofficial)",
   "version": "1.1.2",
-  "publisher": "timkmecl",
+  "publisher": "bkitano",
   "icon": "resources/extensionIcon.png",
   "license": "MIT",
   "repository": {
@@ -27,55 +27,47 @@
     "explain ",
     "refactor"
   ],
-  "activationEvents": [
-    "onView:chatgpt.chatView",
-    "onCommand:chatgpt.ask",
-    "onCommand:chatgpt.explain",
-    "onCommand:chatgpt.refactor",
-    "onCommand:chatgpt.optimize",
-    "onCommand:chatgpt.findProblems",
-    "onCommand:chatgpt.documentation"
-  ],
+  "activationEvents": [],
   "main": "./dist/extension.js",
   "contributes": {
     "commands": [
       {
-        "command": "chatgpt.ask",
-        "title": "Ask ChatGPT"
+        "command": "cisco-llama.ask",
+        "title": "Ask cisco-llama"
       },
       {
-        "command": "chatgpt.explain",
+        "command": "cisco-llama.explain",
         "title": "ChatGPT: Explain selection"
       },
       {
-        "command": "chatgpt.refactor",
-        "title": "ChatGPT: Refactor selection"
+        "command": "cisco-llama.refactor",
+        "title": "cisco-llama: Refactor selection"
       },
       {
-        "command": "chatgpt.findProblems",
+        "command": "cisco-llama.findProblems",
         "title": "ChatGPT: Find problems"
       },
       {
-        "command": "chatgpt.optimize",
+        "command": "cisco-llama.optimize",
         "title": "ChatGPT: Optimize selection"
       },
       {
-        "command": "chatgpt.documentation",
+        "command": "cisco-llama.documentation",
         "title": "ChatGPT: Write documentation"
       },
       {
-        "command": "chatgpt.resetConversation",
+        "command": "cisco-llama.resetConversation",
         "title": "Reset ChatGPT conversation"
       },
       {
-        "command": "chatgpt.tryAgain",
+        "command": "cisco-llama.tryAgain",
         "title": "Retry ChatGPT request"
       }
     ],
     "menus": {
       "editor/context": [
         {
-          "command": "chatgpt.ask",
+          "command": "cisco-llama.ask",
           "when": "editorTextFocus",
           "group": "chatgpt-menu-group@1"
         },
@@ -85,7 +77,7 @@
           "group": "chatgpt-menu-group@2"
         },
         {
-          "command": "chatgpt.refactor",
+          "command": "cisco-llama.refactor",
           "when": "editorHasSelection",
           "group": "chatgpt-menu-group@3"
         },
@@ -107,14 +99,14 @@
       ],
       "commandPalette": [
         {
-          "command": "chatgpt.ask"
+          "command": "cisco-llama.ask"
         },
         {
           "command": "chatgpt.explain",
           "when": "editorHasSelection"
         },
         {
-          "command": "chatgpt.refactor",
+          "command": "cisco-llama.refactor",
           "when": "editorHasSelection"
         },
         {
@@ -138,7 +130,7 @@
       "activitybar": [
         {
           "id": "chatgpt",
-          "title": "ChatGPT",
+          "title": "cisco-llama container title",
           "icon": "resources/icon.png"
         }
       ]
@@ -148,12 +140,12 @@
         {
           "type": "webview",
           "id": "chatgpt.chatView",
-          "name": "ChatGPT"
+          "name": "cisco-llama webview title"
         }
       ]
     },
     "configuration": {
-      "title": "chatGPT",
+      "title": "cisco-llama",
       "type": "object",
       "properties": {
         "chatgpt.apiKey": {
