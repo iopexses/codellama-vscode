@@ -62,6 +62,26 @@
       {
         "command": "cisco.tryAgain",
         "title": "Retry Cisco request"
+      },
+      {
+        "command": "aider.open",
+        "title": "Open Aider"
+      },
+      {
+        "command": "aider.syncFiles",
+        "title": "Sync Open Files to Aider"
+      },
+      {
+        "command": "aider.add",
+        "title": "Add File to Aider"
+      },
+      {
+        "command": "aider.drop",
+        "title": "Drop File from Aider"
+      },
+      {
+        "command": "aider.close",
+        "title": "Close Aider"
       }
     ],
     "menus": {
@@ -228,6 +248,24 @@
           "default": true,
           "description": "Append language id of the selected code to the codeblock (```language...code...```)",
           "order": 11
+        },
+        "aider.ignoreFiles": {
+          "type": "array",
+          "default": [],
+          "items": {
+            "type": "string"
+          },
+          "description": "List of regexes that match filenames that won't automatically be added to the Aider terminal process."
+        },
+        "aider.commandLine": {
+          "type": "string",
+          "default": "aider",
+          "description": "Set that command to run aider.  This can be a path to a binary or a command that is available on the path.  You may also include parameters to aider."
+        },
+        "aider.workingDirectory": {
+          "type": "string",
+          "default": "",
+          "description": "Set the working directory for Aider. Leave empty to use the workspace root or the directory of the active file."
         }
       }
     }

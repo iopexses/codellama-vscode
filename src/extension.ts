@@ -56,7 +56,13 @@ export function activate(context: vscode.ExtensionContext) {
 		vscode.commands.registerCommand('cisco.unitTest', () => commandHandler('promptPrefix.unitTest')),
 		vscode.commands.registerCommand('cisco.findProblems', () => commandHandler('promptPrefix.findProblems')),
 		vscode.commands.registerCommand('cisco.documentation', () => commandHandler('promptPrefix.documentation')),
-		vscode.commands.registerCommand('cisco.resetConversation', () => provider.resetConversation())
+		vscode.commands.registerCommand('cisco.resetConversation', () => provider.resetConversation()),
+		vscode.commands.registerCommand('aider.open', () => console.log("Aider: opening")),
+		vscode.commands.registerCommand('aider.syncFiles', () => console.log("Aider: syncing files")),
+		vscode.commands.registerCommand('aider.add', () => console.log('Aider: adding file')),
+		vscode.commands.registerCommand('aider.drop', () => console.log('Aider: dropping file')),
+		vscode.commands.registerCommand('aider.close', () => console.log('Aider: closing'))
+
 	);
 
 
