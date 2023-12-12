@@ -128,12 +128,42 @@ export function activate(context: vscode.ExtensionContext) {
         aiderState.aider.addFile(filePath);
       }
     }),
-    vscode.commands.registerCommand("aider.drop", () =>
-      console.log("Aider: dropping file")
-    ),
-    vscode.commands.registerCommand("aider.close", () =>
-      console.log("Aider: closing")
-    )
+    vscode.commands.registerCommand("aider.drop", () => {
+      if (!aiderState.aider) {
+        vscode.window.showErrorMessage(
+          "Aider is not running.  Please run the 'Open Aider' command first."
+        );
+      }
+
+      // The code you place here will be executed every time your command is executed
+      // Get the currently selected file in VS Code
+      let activeEditor = vscode.window.activeTextEditor;
+      if (!activeEditor) {
+        return; // No open text editor
+      }
+      let filePath = activeEditor.document.fileName;
+
+      // Send the "/drop <filename>" command to the Aider process
+      if (aiderState.aider) {
+        aiderState.filesThatAiderKnows.delete(filePath);
+        aiderState.aider.dropFile(filePath);
+      }
+    }),
+    vscode.commands.registerCommand("aider.close", () => {
+      console.log("Aider: closing");
+      if (!aiderState.aider) {
+        vscode.window.showErrorMessage(
+          "Aider is not running.  Please run the 'Open Aider' command first."
+        );
+      }
+
+      // The code you place here will be executed every time your command is executed
+      // Terminate the Aider process
+      if (aiderState.aider) {
+        aiderState.aider.dispose();
+        aiderState.aider = null;
+      }
+    })
   );
 
   // ---------- event listeners ----------

@@ -19,9 +19,11 @@ class AiderState {
   createAider() {
     console.log("creating new aider terminal");
     const config = vscode.workspace.getConfiguration("cisco");
+    let workingDirectory: string | undefined = config.get("workingDirectory");
     let openaiApiKey: string | null | undefined = config.get("apiKey");
     let aiderCommandLine: string = config.get("commandLine") ?? "aider";
-    let workingDirectory: string | undefined = config.get("workingDirectory");
+
+    console.log(workingDirectory);
 
     findWorkingDirectory(workingDirectory)
       .then((workingDirectory) => {
@@ -76,9 +78,10 @@ class AiderState {
         (x) => !filesThatVSCodeKnows.has(x)
       );
 
-      let ignoreFiles = vscode.workspace
-        .getConfiguration("aider")
-        .get("ignoreFiles") as string[] || [];
+      let ignoreFiles =
+        (vscode.workspace
+          .getConfiguration("aider")
+          .get("ignoreFiles") as string[]) || [];
       let ignoreFilesRegex = ignoreFiles.map((regex) => new RegExp(regex));
 
       opened = opened.filter(
@@ -134,6 +137,7 @@ function findGitDirectoryInSelfOrParents(filePath: string): string {
  * @returns A promise pointing to a working directory for Aider.
  */
 async function findWorkingDirectory(overridePath?: string): Promise<string> {
+  console.log("getting working directory...");
   if (overridePath && overridePath.trim() !== "") {
     return overridePath;
   }
@@ -182,6 +186,7 @@ async function findWorkingDirectory(overridePath?: string): Promise<string> {
     vscode.workspace.workspaceFolders &&
     vscode.workspace.workspaceFolders.length == 1
   ) {
+    console.log("got working directory");
     let workspaceFolder = vscode.workspace.workspaceFolders[0];
     return findGitDirectoryInSelfOrParents(workspaceFolder.uri.fsPath);
   } else if (vscode.window.activeTextEditor?.document?.fileName) {

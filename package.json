@@ -65,23 +65,23 @@
       },
       {
         "command": "aider.open",
-        "title": "Open Aider"
+        "title": "Open Cisco Copilot"
       },
       {
         "command": "aider.syncFiles",
-        "title": "Sync Open Files to Aider"
+        "title": "Cisco: Sync Open Files"
       },
       {
         "command": "aider.add",
-        "title": "Add File to Aider"
+        "title": "Cisco: Scan File"
       },
       {
         "command": "aider.drop",
-        "title": "Drop File from Aider"
+        "title": "Cisco: Drop File"
       },
       {
         "command": "aider.close",
-        "title": "Close Aider"
+        "title": "Close Cisco Copilot"
       }
     ],
     "menus": {
